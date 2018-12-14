@@ -4,9 +4,11 @@
 
 ### Syslog Listener. Maybe use sockets. Maybe there's a library?
 - Maybe a sockerserver. Seems easiest.
+    - Starting here. Forked a good script and it was done. Boom.
 - Library could work if one exists. Can't find one yet
 ### Logs. And PCAP. Oh. Yeah. Probably
 - We'll work this out
+- Lots of samples available online.
 ### Database? Maybe? Flat file? Somewhere to store and work with logs and events. 
 - Probably NOSQL. Right? I dunno. Ugh.
 - Why not just start with a flat file? Cause even if it'd work a SIEM can't just be grepping files. That'd defeat the exercise

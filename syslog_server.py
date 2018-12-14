@@ -1,35 +1,14 @@
-#!/usr/bin/env python
+import socket
 
-"""
-Tiny Syslog Server in Python.
+from process_events import write_event
 
-This is a tiny syslog server that is able to receive UDP based syslog
-entries on a specified port and save them to a file.
-That's it... it does nothing else...
-There are a few configuration parameters.
-"""
+HOST = '127.0.0.1'
+PORT = 514
 
-import logging
-import socketserver
+server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-LOG_FILE = 'youlogfile.log'
-HOST, PORT = "0.0.0.0", 514
+server.bind((HOST, PORT))
 
-
-class SyslogUDPHandler(socketserver.BaseRequestHandler):
-
-    def handle(self):
-        data = bytes.decode(self.request[0].strip())
-        socket = self.request[1]
-        print( "%s : " % self.client_address[0], str(data))
-        print(str(data))
-
-
-if __name__ == "__main__":
-    try:
-        server = socketserver.UDPServer((HOST,PORT), SyslogUDPHandler)
-        server.serve_forever(poll_interval=0.5)
-    except (IOError, SystemExit):
-        raise
-    except KeyboardInterrupt:
-        print ("Crtl+C Pressed. Shutting down.")
+while True:
+    data, addr = server.recvfrom(1024)
+    write_event(data)
